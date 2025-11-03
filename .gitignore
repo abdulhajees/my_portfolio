@@ -1,0 +1,53 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Build
+/dist/
+/build/
+
+# Env
+.env
+.env.*
+
+# Misc
+*.swp
+*.swo
+
+# SASS
+.sass-cache/
+
+# Coverage
+coverage/
+
+# Others
+*.tgz
+.idea/
+*.iml
+
+# Windows
+*.exe
+*.dll
+*.obj
+*.pdb
+*.idb
+*.class
+*.psd
+*.db
+
+# Portfolio
+humans.txt
+robots.txt
+sitemap.xml
