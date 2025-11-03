@@ -666,10 +666,32 @@ function init3DCube() {
             heroDesc.style.color = '';
         }
         
+
         // Update all buttons with gradient backgrounds
         const gradientButtons = document.querySelectorAll('button.bg-gradient-to-r, a.bg-gradient-to-r');
         gradientButtons.forEach(btn => {
             btn.style.backgroundImage = `linear-gradient(to right, ${theme.gradientFrom}, ${theme.gradientTo})`;
+        });
+
+        // Update all white buttons to use theme color on hover
+        const whiteButtons = document.querySelectorAll('button.bg-white, a.bg-white');
+        whiteButtons.forEach(btn => {
+            // Remove previous event listeners if any
+            if (btn._themeHoverHandler) btn.removeEventListener('mouseenter', btn._themeHoverHandler);
+            if (btn._themeLeaveHandler) btn.removeEventListener('mouseleave', btn._themeLeaveHandler);
+
+            btn._themeHoverHandler = function() {
+                this.style.backgroundColor = theme.primary;
+                this.style.color = '#fff';
+                this.style.borderColor = theme.primary;
+            };
+            btn._themeLeaveHandler = function() {
+                this.style.backgroundColor = '';
+                this.style.color = '';
+                this.style.borderColor = '';
+            };
+            btn.addEventListener('mouseenter', btn._themeHoverHandler);
+            btn.addEventListener('mouseleave', btn._themeLeaveHandler);
         });
         
         // Update border colors throughout the site
@@ -1225,3 +1247,100 @@ function initExperienceScroll() {
 // Initialize on page load
 window.addEventListener('load', initExperienceScroll);
 window.addEventListener('load', initCertificatesCarousel);
+
+// Custom Right-Click Context Menu - Initialize after page load
+window.addEventListener('load', function() {
+    const contextMenu = document.getElementById('customContextMenu');
+    
+    if (!contextMenu) {
+        console.error('Context menu element not found');
+        return;
+    }
+    
+    // Prevent default context menu on the entire document
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        
+        // Show menu temporarily to get dimensions
+        contextMenu.style.visibility = 'hidden';
+        contextMenu.classList.remove('hidden');
+        contextMenu.style.display = 'block';
+        
+        // Get menu dimensions
+        const menuWidth = contextMenu.offsetWidth;
+        const menuHeight = contextMenu.offsetHeight;
+        
+        // Get viewport dimensions
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate position using clientX/clientY (viewport coordinates)
+        let x = e.clientX;
+        let y = e.clientY;
+        
+        // Adjust horizontal position if menu would go off screen
+        if (x + menuWidth > viewportWidth) {
+            x = viewportWidth - menuWidth - 5;
+        }
+        
+        // Adjust vertical position if menu would go off screen
+        if (y + menuHeight > viewportHeight) {
+            y = viewportHeight - menuHeight - 5;
+        }
+        
+        // Ensure menu doesn't go off the left/top edges
+        if (x < 5) x = 5;
+        if (y < 5) y = 5;
+        
+        // Apply final position
+        contextMenu.style.left = x + 'px';
+        contextMenu.style.top = y + 'px';
+        contextMenu.style.visibility = 'visible';
+        
+        return false;
+    });
+    
+    // Close context menu on click anywhere
+    document.addEventListener('click', function(e) {
+        if (!contextMenu.contains(e.target)) {
+            contextMenu.classList.add('hidden');
+            contextMenu.style.display = 'none';
+        }
+    });
+    
+    // Close context menu on scroll
+    window.addEventListener('scroll', function() {
+        contextMenu.classList.add('hidden');
+        contextMenu.style.display = 'none';
+    });
+    
+    // Handle theme selection from context menu - Using EXACT same logic as footer theme selector
+    const themeButtons = contextMenu.querySelectorAll('.theme-option[data-theme]');
+    
+    themeButtons.forEach(box => {
+        box.addEventListener('click', function() {
+            const themeName = this.getAttribute('data-theme');
+            const theme = colorThemes[themeName];
+            
+            if (theme && theme.gradientFrom !== currentTheme.gradientFrom) {
+                applyTheme(theme);
+                showThemeNotification(theme.name);
+                showResetButton();
+            }
+            
+            // Close menu
+            contextMenu.classList.add('hidden');
+            contextMenu.style.display = 'none';
+        });
+    });
+    
+    // Handle reset from context menu - Using EXACT same logic as footer reset button
+    const resetBtn = document.getElementById('resetThemeFromMenu');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function() {
+                // Refresh the page when reset is clicked
+                window.location.reload();
+        });
+    }
+});
+

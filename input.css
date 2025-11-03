@@ -1,13 +1,111 @@
-.resume-download-btn {
+/* White Button Styles - Default Black & White with Silver Shine */
+.resume-download-btn,
+button.bg-white,
+a.bg-white {
     background: #fff;
     color: #111;
     border: 1px solid rgba(255,255,255,0.2);
-    transition: all 0.3s;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-body.theme-active .resume-download-btn {
-    background: linear-gradient(90deg, #a855f7, #ec4899);
+/* Silver Shine Line Animation */
+.resume-download-btn::before,
+button.bg-white::before,
+a.bg-white::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.8) 50%, 
+        transparent 100%
+    );
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+/* Default Hover Effect - Black & White with Silver Shine */
+.resume-download-btn:hover,
+button.bg-white:hover,
+a.bg-white:hover {
+    background: #000;
     color: #fff;
+    border-color: rgba(192, 192, 192, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(192, 192, 192, 0.3);
+}
+
+.resume-download-btn:hover::before,
+button.bg-white:hover::before,
+a.bg-white:hover::before {
+    left: 100%;
+}
+
+/* Theme Active State - Only applies when a theme is active */
+body.theme-active .resume-download-btn,
+body.theme-active button.bg-white,
+body.theme-active a.bg-white {
+    /* Keep white background by default */
+    background: #fff;
+    color: #111;
+}
+
+/* Custom Context Menu Styles - Browser-like appearance */
+#customContextMenu {
+    z-index: 2147483647 !important; /* Maximum z-index value */
+    position: fixed !important;
+    background: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    padding: 4px 0;
+    min-width: 200px;
+    animation: contextMenuFadeIn 0.1s ease-out;
+}
+
+#customContextMenu * {
+    z-index: inherit;
+}
+
+#customContextMenu .theme-option {
+    background: transparent;
+    color: #000000;
+    padding: 6px 12px;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    text-align: left;
+    font-size: 13px;
+    cursor: default;
+    transition: background-color 0.1s;
+}
+
+#customContextMenu .theme-option:hover {
+    background: #0078d4;
+    color: #ffffff;
+}
+
+#customContextMenu .p-4,
+#customContextMenu .p-3 {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+@keyframes contextMenuFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 /* Image Zoom Modal Overlay */
 #imageZoomModal {
