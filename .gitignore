@@ -3,6 +3,7 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
 
 # OS
 .DS_Store
@@ -47,7 +48,5 @@ coverage/
 *.psd
 *.db
 
-# Portfolio
-humans.txt
-robots.txt
-sitemap.xml
+# Vercel
+.vercel

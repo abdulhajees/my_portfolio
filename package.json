@@ -1,20 +1,22 @@
 {
   "name": "abdul-hajees-portfolio",
   "version": "1.0.0",
-  "description": "A premium, SEO-optimized personal portfolio website for **Abdul Hajees** - Full Stack Developer, UI/UX Designer, and Founder of Pludo AI. This portfolio is built with a focus on search engine optimization, performance, and user experience.",
-  "main": "script.js",
+  "description": "A premium, SEO-optimized personal portfolio website for Abdul Hajees - Full Stack Developer, UI/UX Designer, and Project Architect of Pludo AI. This portfolio is built with a focus on search engine optimization, performance, and user experience.",
+  "main": "index.html",
   "scripts": {
-    "build": "npx tailwindcss -i ./input.css -o ./output.css"
+    "build": "tailwindcss -i ./input.css -o ./styles.css --minify",
+    "dev": "tailwindcss -i ./input.css -o ./styles.css --watch"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "portfolio",
+    "full-stack",
+    "developer",
+    "ui-ux",
+    "designer"
+  ],
+  "author": "Abdul Hajees",
   "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.16",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "postcss-cli": "^11.0.1",
-    "tailwindcss": "^4.1.16"
+    "tailwindcss": "^3.4.0"
   }
 }
